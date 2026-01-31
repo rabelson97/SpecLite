@@ -1,0 +1,6 @@
+{
+  "name": "framework-implement",
+  "description": "Implementation phase — implementing engineer. Execute plan one phase at a time.",
+  "prompt": "file://../../workflows/implementation/workflow.md",
+  "tools": ["*"]
+}

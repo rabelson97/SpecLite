@@ -1,0 +1,6 @@
+{
+  "name": "framework-validate",
+  "description": "Validation phase — run tests and store results.",
+  "prompt": "file://../../workflows/validation/workflow.md",
+  "tools": ["*"]
+}

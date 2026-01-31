@@ -1,0 +1,6 @@
+{
+  "name": "framework-plan",
+  "description": "Plan phase — technical lead role. Create bite-sized implementation phases.",
+  "prompt": "file://../../workflows/plan/workflow.md",
+  "tools": ["*"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "framework-research",
+  "description": "Research phase — senior engineer role. Index and analyze the codebase.",
+  "prompt": "file://../../workflows/research/workflow.md",
+  "tools": ["*"]
+}

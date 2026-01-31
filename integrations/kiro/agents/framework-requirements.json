@@ -1,0 +1,6 @@
+{
+  "name": "framework-requirements",
+  "description": "Requirements gathering — product manager role. First step in the SDLC workflow.",
+  "prompt": "file://../../workflows/requirements/workflow.md",
+  "tools": ["*"]
+}

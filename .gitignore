@@ -1,0 +1,12 @@
+# Framework runtime artifacts
+runs/
+
+# Temp files from indexing
+*.tmp
+*.temp
+
+# Chunk files from run-workers
+chunk_*.txt
+
+# Validation test output (captured per run)
+**/validation/test-output.txt

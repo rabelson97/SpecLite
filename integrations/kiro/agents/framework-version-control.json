@@ -1,0 +1,6 @@
+{
+  "name": "framework-version-control",
+  "description": "Version control phase — capture git status and optionally commit.",
+  "prompt": "file://../../workflows/version-control/workflow.md",
+  "tools": ["*"]
+}
