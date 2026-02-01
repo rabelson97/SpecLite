@@ -5,6 +5,21 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 FRAMEWORK_PATH="${FRAMEWORK_PATH:-$ROOT_DIR}"
 
+ensure_link() {
+  local src="$1"
+  local dest="$2"
+  local label="$3"
+  if [[ -e "$dest" ]]; then
+    echo "$label exists: $dest"
+    return 0
+  fi
+  if [[ -L "$dest" ]]; then
+    rm -f "$dest"
+  fi
+  ln -s "$src" "$dest"
+  echo "$label: $dest -> $src"
+}
+
 usage() {
   echo "Usage: $0 [--codex] [--kiro] [--cursor] [--project]"
   echo ""
@@ -57,7 +72,6 @@ fi
 WORKFLOWS=("requirements:requirements" "research:research" "plan:plan" "implementation:implement" "validation:validate" "version-control:version-control")
 CODEX_SKILLS=(
   "ai-assisted-framework:$FRAMEWORK_PATH"
-  "manage-workflow:$FRAMEWORK_PATH/integrations/codex/skills/manage-workflow"
   "framework-requirements:$FRAMEWORK_PATH/integrations/codex/skills/framework-requirements"
   "framework-research:$FRAMEWORK_PATH/integrations/codex/skills/framework-research"
   "framework-plan:$FRAMEWORK_PATH/integrations/codex/skills/framework-plan"
@@ -72,12 +86,7 @@ if [[ "$do_codex" == "true" ]]; then
     skill_name="${entry%%:*}"
     skill_src="${entry##*:}"
     skill_dest="$CODEX_SKILLS_DEST/$skill_name"
-    if [[ -e "$skill_dest" ]]; then
-      echo "Codex skill exists: $skill_dest"
-    else
-      ln -s "$skill_src" "$skill_dest"
-      echo "Codex skill: $skill_dest -> $skill_src"
-    fi
+    ensure_link "$skill_src" "$skill_dest" "Codex skill"
   done
 
   mkdir -p "$CODEX_PROMPTS_DEST"
@@ -87,12 +96,7 @@ if [[ "$do_codex" == "true" ]]; then
     src="$FRAMEWORK_PATH/workflows/$phase/workflow.md"
     dest="$CODEX_PROMPTS_DEST/framework.$prompt_name.md"
     if [[ -f "$src" ]]; then
-      if [[ -e "$dest" ]]; then
-        echo "Codex prompt exists: $dest"
-      else
-        ln -s "$src" "$dest"
-        echo "Codex prompt: $dest -> $src"
-      fi
+      ensure_link "$src" "$dest" "Codex prompt"
     fi
   done
 fi
@@ -103,29 +107,12 @@ if [[ "$do_kiro" == "true" ]]; then
     [[ -f "$f" ]] || continue
     name="$(basename "$f")"
     dest="$KIRO_DEST/$name"
-    if [[ -e "$dest" ]]; then
-      echo "Kiro agent exists: $dest"
-    else
-      ln -s "$f" "$dest"
-      echo "Kiro: $dest -> $f"
-    fi
+    ensure_link "$f" "$dest" "Kiro agent"
   done
 fi
 
 if [[ "$do_cursor" == "true" ]]; then
   mkdir -p "$CURSOR_DEST"
-  for f in "$FRAMEWORK_PATH/.cursor/commands"/*.md; do
-    [[ -f "$f" ]] || continue
-    [[ "$(basename "$f")" == "README.md" ]] && continue
-    name="$(basename "$f")"
-    dest="$CURSOR_DEST/$name"
-    if [[ -e "$dest" ]]; then
-      echo "Cursor command exists: $dest"
-    else
-      ln -s "$f" "$dest"
-      echo "Cursor: $dest -> $f"
-    fi
-  done
   CURSOR_PHASES=("1-requirements:requirements" "2-research:research" "3-plan:plan" "4-implement:implementation" "5-validate:validation" "version-control:version-control")
   for entry in "${CURSOR_PHASES[@]}"; do
     cmd_name="${entry%%:*}"
@@ -133,12 +120,7 @@ if [[ "$do_cursor" == "true" ]]; then
     src="$FRAMEWORK_PATH/workflows/$phase/workflow.md"
     dest="$CURSOR_DEST/$cmd_name.md"
     if [[ -f "$src" ]]; then
-      if [[ -e "$dest" ]]; then
-        echo "Cursor command exists: $dest"
-      else
-        ln -s "$src" "$dest"
-        echo "Cursor: $dest -> $src"
-      fi
+      ensure_link "$src" "$dest" "Cursor command"
     fi
   done
 fi

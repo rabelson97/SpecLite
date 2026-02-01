@@ -1,1 +1,0 @@
-../../scripts/run-workers.md

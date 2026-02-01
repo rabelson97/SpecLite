@@ -1,6 +1,12 @@
 # Framework runtime artifacts
 runs/
 
+# Local editor/tool state
+.codex/
+.cursor/
+.kiro/
+.DS_Store
+
 # Temp files from indexing
 *.tmp
 *.temp

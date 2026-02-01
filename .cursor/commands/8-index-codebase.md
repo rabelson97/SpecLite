@@ -1,1 +1,0 @@
-../../scripts/index-codebase.md

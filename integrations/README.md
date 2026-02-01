@@ -11,6 +11,7 @@ From the framework directory:
 ```
 
 This creates symlinks in `~/.codex/`, `~/.kiro/`, and `~/.cursor/`. **No files are copied.**
+Use `--project` to install into a project-local `.codex/`, `.kiro/`, and `.cursor/` from that project root.
 
 ## Codex (CLI + Cursor plugin)
 
@@ -47,3 +48,16 @@ Agents are symlinked to `~/.kiro/agents/`. The `file://` paths in each config ar
 | `framework-version-control` | Version control |
 
 Switch to an agent in Kiro to run that phase. Each agent loads the corresponding workflow as its prompt.
+
+---
+
+## Cursor
+
+Cursor commands are symlinked directly to the phase workflows:
+
+- `/1-requirements`
+- `/2-research`
+- `/3-plan`
+- `/4-implement`
+- `/5-validate`
+- `/version-control`

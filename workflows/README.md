@@ -22,16 +22,9 @@ Usage pattern:
 ```
 
 Cursor slash commands:
-- `/0-new-run`
 - `/1-requirements`
 - `/2-research`
 - `/3-plan`
 - `/4-implement`
 - `/5-validate`
 - `/version-control`
-- `/0-setup`
-- `/0-cleanup-cache`
-- `/manage-workflow`
-- `/save-learnings`
-- `/8-index-codebase`
-- `/9-run-workers`
