@@ -21,6 +21,7 @@ Codex uses two locations:
 
 Installed skills (all symlinks to canonical workflows):
 - `ai-assisted-framework` (umbrella skill)
+- `framework-discovery`
 - `framework-requirements`
 - `framework-research`
 - `framework-plan`
@@ -40,6 +41,7 @@ Agents are symlinked to `~/.kiro/agents/`. The `file://` paths in each config ar
 
 | Agent | Phase |
 |-------|-------|
+| `framework-discovery` | Discovery (research analyst) |
 | `framework-requirements` | Requirements (product manager) |
 | `framework-research` | Research (senior engineer) |
 | `framework-plan` | Plan (technical lead) |
@@ -55,6 +57,7 @@ Switch to an agent in Kiro to run that phase. Each agent loads the corresponding
 
 Cursor commands are symlinked directly to the phase workflows:
 
+- `/0-discovery`
 - `/1-requirements`
 - `/2-research`
 - `/3-plan`

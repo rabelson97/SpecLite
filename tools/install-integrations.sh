@@ -69,9 +69,10 @@ else
   CURSOR_DEST="$HOME/.cursor/commands"
 fi
 
-WORKFLOWS=("requirements:requirements" "research:research" "plan:plan" "implementation:implement" "validation:validate" "version-control:version-control")
+WORKFLOWS=("discovery:discovery" "requirements:requirements" "research:research" "plan:plan" "implementation:implement" "validation:validate" "version-control:version-control")
 CODEX_SKILLS=(
   "ai-assisted-framework:$FRAMEWORK_PATH"
+  "framework-discovery:$FRAMEWORK_PATH/integrations/codex/skills/framework-discovery"
   "framework-requirements:$FRAMEWORK_PATH/integrations/codex/skills/framework-requirements"
   "framework-research:$FRAMEWORK_PATH/integrations/codex/skills/framework-research"
   "framework-plan:$FRAMEWORK_PATH/integrations/codex/skills/framework-plan"
@@ -113,7 +114,7 @@ fi
 
 if [[ "$do_cursor" == "true" ]]; then
   mkdir -p "$CURSOR_DEST"
-  CURSOR_PHASES=("1-requirements:requirements" "2-research:research" "3-plan:plan" "4-implement:implementation" "5-validate:validation" "version-control:version-control")
+  CURSOR_PHASES=("0-discovery:discovery" "1-requirements:requirements" "2-research:research" "3-plan:plan" "4-implement:implementation" "5-validate:validation" "version-control:version-control")
   for entry in "${CURSOR_PHASES[@]}"; do
     cmd_name="${entry%%:*}"
     phase="${entry##*:}"

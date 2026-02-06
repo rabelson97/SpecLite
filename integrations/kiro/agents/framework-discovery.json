@@ -1,0 +1,6 @@
+{
+  "name": "framework-discovery",
+  "description": "Discovery phase — research analyst role. Internet research before codebase analysis.",
+  "prompt": "file://../../workflows/discovery/workflow.md",
+  "tools": ["*"]
+}

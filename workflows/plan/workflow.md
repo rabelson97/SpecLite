@@ -22,10 +22,15 @@ You are a **technical lead**. You take the requirements and research and produce
    - Can be implemented independently
    - Produces a complete, coherent change
    - Avoids "Phase 2 continues Phase 1" – instead, each phase is a whole unit of work
-6. **Define phase details** – For each phase, define scope (files/areas), expected artifacts, and validation notes.
-7. **Keep phases parallelizable** – Add sequencing only where necessary; otherwise keep phases independent.
+6. **Define phase details** – For each phase, define:
+   - **Goal**: Single, clear objective
+   - **Files**: Specific files/areas to modify
+   - **Dependencies**: Which phases must complete first (or "None")
+   - **Parallel**: Whether this can run alongside other phases
+   - **Outcome**: Expected artifacts and validation criteria
+7. **Keep phases parallelizable** – Mark phases that can run in parallel. Only add dependencies where truly necessary.
 8. **Ensure traceability** – Make links explicit from requirements → plan → implementation → validation.
-9. **Write the plan** – Update `run_dir/plan/plan.md`. Replace the default Phases list with your phases. Format each phase as: number, goal, scope (files/areas), and expected outcome.
+9. **Write the plan** – Update `run_dir/plan/plan.md`. Replace the default Phases list with your phases. Use the structured format shown below.
 10. **Hand off** – Confirm and point the user to `/4-implement`.
 
 ## Outputs
@@ -38,9 +43,26 @@ You are a **technical lead**. You take the requirements and research and produce
 ```
 ## Phases
 
-1. **Establish pattern** – Add X following convention Y. Files: `path/to/file`. Outcome: pattern in place for remaining work.
-2. **Implement feature A** – Add A. Files: `src/a.ts`. Outcome: A working end-to-end.
-3. **Implement feature B** – Add B. Files: `src/b.ts`. Outcome: B working.
+### Phase 1: Establish pattern
+- **Goal**: Add X following convention Y
+- **Files**: `path/to/file`
+- **Dependencies**: None
+- **Parallel**: Can run independently
+- **Outcome**: Pattern in place for remaining work
+
+### Phase 2: Implement feature A
+- **Goal**: Add A
+- **Files**: `src/a.ts`
+- **Dependencies**: Phase 1
+- **Parallel**: No (requires Phase 1)
+- **Outcome**: A working end-to-end
+
+### Phase 3: Implement feature B
+- **Goal**: Add B
+- **Files**: `src/b.ts`
+- **Dependencies**: Phase 1
+- **Parallel**: Yes (with Phase 2)
+- **Outcome**: B working
 ```
 
 ## Command

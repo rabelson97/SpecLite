@@ -66,6 +66,36 @@ ensure_run_for_requirements() {
 }
 
 case "$phase" in
+  discovery)
+    topics=""
+    while [[ $# -gt 0 ]]; do
+      case "$1" in
+        --topics) topics="$2"; shift 2;;
+        *) fail "unknown argument: $1";;
+      esac
+    done
+    run_dir="$(resolve_run_dir "$run_dir")"
+    require_run_dir "$run_dir"
+    out="$run_dir/discovery/discovery.md"
+    write_header "$out" "Discovery" "$(basename "$run_dir")"
+    append_section "$out" "Research Topics"
+    if [[ -n "$topics" ]]; then
+      IFS=',' read -ra topic_arr <<< "$topics"
+      for topic in "${topic_arr[@]}"; do
+        printf "- %s\n" "$topic" >> "$out"
+      done
+    else
+      printf "(add research topics here)\n" >> "$out"
+    fi
+    append_section "$out" "Findings"
+    printf "(add research findings organized by topic)\n" >> "$out"
+    append_section "$out" "Recommendations"
+    printf "(add high-level approach recommendations)\n" >> "$out"
+    sources="$run_dir/discovery/sources.md"
+    write_header "$sources" "Sources" "$(basename "$run_dir")"
+    printf "(add all referenced URLs and citations here)\n" >> "$sources"
+    echo "$out"
+    ;;
   requirements)
     input_file=""
     project_name=""

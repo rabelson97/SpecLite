@@ -1,12 +1,13 @@
-# AI-Assisted Development Framework
+# SpecLite
 
-A phase-based workflow system that stores each phase artifact in a dedicated run directory to avoid context rot.
+A phase-based AI development workflow that stores each phase artifact in a dedicated run directory. Includes parallel research, web search, and task dependency tracking.
 
 ## Quickstart
 
 ```bash
 ./tools/setup.sh
 RUN_DIR=$(./tools/new-run.sh "My Project")
+./tools/run-phase.sh discovery "$RUN_DIR" --topics "auth,testing"  # optional
 ./tools/run-phase.sh requirements "$RUN_DIR"
 ./tools/run-phase.sh research "$RUN_DIR"
 ./tools/run-phase.sh plan "$RUN_DIR"
@@ -16,6 +17,16 @@ RUN_DIR=$(./tools/new-run.sh "My Project")
 ```
 
 `runs/` is gitignored and created on demand; this repo ships with no run history.
+
+## Phases
+
+1. **Discovery** (optional): External research using web search for best practices, libraries, patterns
+2. **Requirements**: Product manager role gathering requirements and clarifications
+3. **Research**: Parallel codebase analysis using specialized subagents
+4. **Plan**: Technical lead creating phases with dependency tracking
+5. **Implementation**: Execute plan phases
+6. **Validation**: Run tests and verify outcomes
+7. **Version Control**: Git operations and status
 
 ## Structure
 
@@ -34,20 +45,27 @@ This framework uses symlinks only — nothing is copied.
 ./tools/install-integrations.sh --project                 # project-scoped (run from project root)
 ```
 
-After installing, restart Codex or reload Cursor for slash commands to appear. Codex skills include the umbrella `ai-assisted-framework` plus per-phase skills like `framework-requirements`, `framework-research`, and `framework-plan`.
+After installing, restart Codex or reload Cursor for slash commands to appear.
 
 ## Cursor Slash Commands
 
-Cursor commands are symlinked to the workflow markdown files:
+- `/0-discovery` - External research phase
+- `/1-requirements` - Requirements gathering
+- `/2-research` - Parallel codebase research
+- `/3-plan` - Task breakdown with dependencies
+- `/4-implement` - Implementation
+- `/5-validate` - Validation
+- `/version-control` - Git operations
 
-- `/1-requirements`
-- `/2-research`
-- `/3-plan`
-- `/4-implement`
-- `/5-validate`
-- `/version-control`
+## Key Features
+
+- **Parallel Research**: Spawns specialized subagents for architecture, patterns, dependencies, gaps, and risks
+- **Web Search**: Discovery phase searches external sources for best practices and solutions
+- **Task Dependencies**: Plan phase tracks which tasks can run in parallel vs sequentially
+- **Isolated Context**: Each run directory prevents context rot across projects
 
 ## Notes
 
-- Research indexing outputs: `files.txt`, `extensions.txt`, `largest_files.txt`, `directories.txt`.
-- Validation captures test output to `runs/<run_id>/validation/test-output.txt`.
+- Research indexing outputs: `files.txt`, `extensions.txt`, `largest_files.txt`, `directories.txt`
+- Validation captures test output to `runs/<run_id>/validation/test-output.txt`
+- Discovery phase creates `sources.md` with all external references

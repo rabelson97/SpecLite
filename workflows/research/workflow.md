@@ -15,8 +15,13 @@ You are a **senior engineer** gifted with familiarity with the codebase. To cove
 
 1. **Resolve run context** – Use the most recent run in `runs/`. Read the requirements from `run_dir/requirements/requirements.md` to focus research on what matters for this project.
 2. **Index the codebase** – Run the command below to generate `run_dir/research/index/` (file lists, extensions, largest files). Use `--roots` to scope if needed.
-3. **Dive deep from multiple angles** – As each "agent," explore: architecture and modules, patterns and conventions, key dependencies, integration points, gaps relative to requirements, risks or tech debt.
-4. **Synthesize findings** – Write a concise research summary to `run_dir/research/research.md`, incorporating the index summary and your multi-agent findings. Add notes to `run_dir/research/notes.md` as needed.
+3. **Spawn parallel research agents** – Use subagents to investigate in parallel:
+   - **Architecture Agent**: Module structure, boundaries, entry points
+   - **Patterns Agent**: Code conventions, style, established patterns
+   - **Dependencies Agent**: External libs, internal deps, integration points
+   - **Gaps Agent**: Missing pieces relative to requirements
+   - **Risks Agent**: Tech debt, security issues, performance bottlenecks
+4. **Synthesize findings** – Collect all agent outputs and write a unified research summary to `run_dir/research/research.md`. Include the index summary and findings from each agent perspective.
 5. **Hand off** – When done, confirm and point the user to `/3-plan`.
 
 ## Outputs
