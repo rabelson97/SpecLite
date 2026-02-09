@@ -244,10 +244,12 @@ case "$phase" in
     ;;
   version-control)
     do_status="false"
+    do_diff="false"
     commit_msg=""
     while [[ $# -gt 0 ]]; do
       case "$1" in
         --status) do_status="true"; shift;;
+        --diff) do_diff="true"; shift;;
         --commit) commit_msg="$2"; shift 2;;
         *) fail "unknown argument: $1";;
       esac
@@ -258,19 +260,37 @@ case "$phase" in
     write_header "$out" "Version Control" "$(basename "$run_dir")"
     append_section "$out" "Summary"
     printf "(summarize status, diffs, and commit decisions)\n" >> "$out"
+
     if [[ -d "$ROOT_DIR/.git" ]]; then
       if [[ "$do_status" == "true" ]]; then
         append_section "$out" "Git Status"
         (cd "$ROOT_DIR" && git status -sb) > "$run_dir/version-control/git-status.txt" 2>&1 || true
         printf "See %s\n" "$run_dir/version-control/git-status.txt" >> "$out"
+
         append_section "$out" "Git Diff Stat"
         (cd "$ROOT_DIR" && git diff --stat) > "$run_dir/version-control/git-diff-stat.txt" 2>&1 || true
         printf "See %s\n" "$run_dir/version-control/git-diff-stat.txt" >> "$out"
       fi
+
+      if [[ "$do_diff" == "true" ]]; then
+        append_section "$out" "Git Diff"
+        (cd "$ROOT_DIR" && git diff) > "$run_dir/version-control/git-diff.txt" 2>&1 || true
+        printf "See %s\n" "$run_dir/version-control/git-diff.txt" >> "$out"
+      fi
+
       if [[ -n "$commit_msg" ]]; then
-        (cd "$ROOT_DIR" && git add -A && git commit -m "$commit_msg") || true
         append_section "$out" "Commit"
         printf "Attempted commit with message: %s\n" "$commit_msg" >> "$out"
+        printf "(Commit runs only when --commit is provided; no push is performed.)\n" >> "$out"
+
+        # Capture commit output for auditability.
+        (
+          cd "$ROOT_DIR"
+          git add -A
+          git commit -m "$commit_msg"
+        ) > "$run_dir/version-control/git-commit.txt" 2>&1 || true
+
+        printf "See %s\n" "$run_dir/version-control/git-commit.txt" >> "$out"
       else
         append_section "$out" "Notes"
         printf "(add commit rationale or note if no commit)\n" >> "$out"
@@ -279,6 +299,7 @@ case "$phase" in
       append_section "$out" "Notes"
       printf "No git repository detected at %s\n" "$ROOT_DIR" >> "$out"
     fi
+
     echo "$out"
     ;;
   *)

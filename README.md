@@ -64,8 +64,33 @@ After installing, restart Codex or reload Cursor for slash commands to appear.
 - **Task Dependencies**: Plan phase tracks which tasks can run in parallel vs sequentially
 - **Isolated Context**: Each run directory prevents context rot across projects
 
+## Artifact Contract (Expected Outputs)
+
+Each phase writes its primary artifact into a dedicated directory under a run. This makes runs easy to browse, diff, and archive.
+
+- `discovery/`
+  - `discovery.md` (primary)
+  - `sources.md`
+- `requirements/`
+  - `requirements.md` (primary)
+- `research/`
+  - `research.md` (primary)
+  - `index/` (generated)
+    - `files.txt`, `extensions.txt`, `largest_files.txt`, `directories.txt`
+- `plan/`
+  - `plan.md` (primary)
+- `implementation/`
+  - `implementation.md` (primary)
+- `validation/`
+  - `validation.md` (primary)
+  - `test-output.txt` (captured when `--test-cmd` is provided)
+- `version-control/`
+  - `version-control.md` (primary)
+  - `git-status.txt`, `git-diff-stat.txt` (captured when `--status` is provided)
+  - `git-diff.txt` (captured when `--diff` is provided)
+  - `git-commit.txt` (captured when `--commit` is provided)
+
 ## Notes
 
-- Research indexing outputs: `files.txt`, `extensions.txt`, `largest_files.txt`, `directories.txt`
-- Validation captures test output to `runs/<run_id>/validation/test-output.txt`
-- Discovery phase creates `sources.md` with all external references
+- `runs/` is gitignored; the repo ships with no run history.
+- Discovery phase stores all external references in `sources.md`.
