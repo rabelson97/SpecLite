@@ -1,5 +1,23 @@
 # SpecLite Changelog
 
+## Version 2.1 - Consistency + Flexible Phase Gates
+
+### Highlights
+
+- Fixed run scaffolding to include `discovery/` by default.
+- Removed layout mismatch in `new-run.sh` (no more conflicting `notes.md` placeholders).
+- Hardened phase runners to create parent directories before writing artifacts.
+- Added flexible, input-availability gates (no forced phase order).
+- Added `--strict` fail-fast mode and context selection flags (`--use-*` / `--no-*`).
+- Updated docs/rules to reflect flexible execution model.
+
+### Behavioral changes
+
+- You can run phases independently (for example: research-only, plan-only, validation-only).
+- In permissive mode (default), missing optional upstream artifacts generate warnings.
+- In strict mode, selected missing inputs fail fast.
+- Validation now fails in strict mode when the test command fails (or when `--test-cmd` is omitted).
+
 ## Version 2.0 - SpecLite Release
 
 **Release Date:** February 5, 2026

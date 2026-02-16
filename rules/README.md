@@ -6,7 +6,7 @@ This repository hosts an AI-assisted development framework intended to be reused
 ## Workflow Rules
 - Every workflow run must have a dedicated `runs/<run_id>` directory with `meta.json`.
 - Each phase stores artifacts inside its phase folder and references any external files by path.
-- Phases must be executed in order: requirements → research → plan → implementation → validation → version-control.
+- Phases are flexible and may be executed independently; when strict ordering is desired, run phases with `--strict` and explicit `--use-*` context flags.
 - Every phase should write at least one markdown artifact summarizing outcomes and decisions.
 
 ## Extension Rules

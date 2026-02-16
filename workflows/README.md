@@ -9,7 +9,7 @@ Workflow commands are markdown files designed for AI runners (Cursor/Codex). Eac
 - `validation/workflow.md`
 - `version-control/workflow.md`
 
-Usage pattern:
+Usage pattern (common path, but phases can run independently):
 
 ```bash
 ./tools/new-run.sh "Project Name"
@@ -20,6 +20,10 @@ Usage pattern:
 ./tools/run-phase.sh validation [run_dir]
 ./tools/run-phase.sh version-control [run_dir]
 ```
+
+Flexible execution:
+- Run any phase directly if that's all you need.
+- Use `--strict` to fail when selected context is missing or validation tests fail.
 
 Cursor slash commands:
 - `/1-requirements`

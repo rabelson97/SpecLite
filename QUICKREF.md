@@ -5,12 +5,14 @@
 ```
 0. Discovery (optional)  → External research
 1. Requirements          → Gather requirements
-2. Research             → Analyze codebase (parallel agents)
-3. Plan                 → Break into tasks (with dependencies)
-4. Implementation       → Execute plan
-5. Validation          → Test and verify
-6. Version Control     → Git operations
+2. Research              → Analyze codebase
+3. Plan                  → Break into tasks (with dependencies)
+4. Implementation        → Execute plan
+5. Validation            → Test and verify
+6. Version Control       → Git operations
 ```
+
+Phases are flexible: you can run any phase directly. Use `--strict` when you want fail-fast behavior.
 
 ## Commands
 
@@ -146,6 +148,16 @@ RUN_DIR=$(./tools/new-run.sh "Codebase Analysis")
 ./tools/run-phase.sh research "$RUN_DIR"
 # Review runs/<run_id>/research/research.md
 ```
+
+## Gate / Context Flags
+
+- `--strict` (supported across phases): fail fast on missing selected context; validation also fails on test failure.
+- Context toggles (examples):
+  - `research`: `--use-requirements` / `--no-requirements`
+  - `plan`: `--use-requirements`, `--use-research` (and `--no-*` variants)
+  - `implementation`: `--use-plan`, `--use-research` (and `--no-*` variants)
+  - `validation`: `--use-implementation`, `--use-plan` (and `--no-*` variants)
+  - `version-control`: `--use-validation` / `--no-validation`
 
 ## Tips
 

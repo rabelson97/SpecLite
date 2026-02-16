@@ -22,11 +22,14 @@ RUN_DIR=$(./tools/new-run.sh "My Project")
 
 1. **Discovery** (optional): External research using web search for best practices, libraries, patterns
 2. **Requirements**: Product manager role gathering requirements and clarifications
-3. **Research**: Parallel codebase analysis using specialized subagents
+3. **Research**: Codebase analysis with optional requirements context
 4. **Plan**: Technical lead creating phases with dependency tracking
-5. **Implementation**: Execute plan phases
+5. **Implementation**: Execute planned changes
 6. **Validation**: Run tests and verify outcomes
 7. **Version Control**: Git operations and status
+
+> Phases are **flexible**. You can run any phase directly when needed (for example, research-only or plan-only).
+> Use `--strict` when you want missing context/test failures to fail fast.
 
 ## Structure
 
