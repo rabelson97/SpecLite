@@ -1,0 +1,6 @@
+{
+  "name": "framework-debug",
+  "description": "Debug workflow — diagnose issues systematically.",
+  "prompt": "file://../../workflows/debug/workflow.md",
+  "tools": ["*"]
+}

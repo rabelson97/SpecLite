@@ -1,48 +1,67 @@
 ---
 name: speclite
-description: SpecLite - Phase-based AI development workflow with parallel research, web search, and task dependencies (discovery → requirements → research → plan → implementation → validation → version-control). Use when starting a new feature, researching external solutions, gathering requirements as a product manager, analyzing codebase with parallel agents, creating implementation plans with dependencies, implementing in phases, validating, or version-controlling. Supports Cursor, Codex CLI, and Kiro CLI.
+description: SpecLite - Artifact-first AI development workflow for spec-driven software delivery. Use when you want structured discovery, requirements, research, planning, implementation, validation, version control, or higher-level routing via brainstorm, debug, enhance, orchestrate, and status. Supports Codex, Cursor, and Kiro integrations.
 ---
 
 # SpecLite
 
-Phase-based AI development workflow that stores each phase artifact in `runs/<run_id>/`. Includes parallel research agents, web search integration, and task dependency tracking.
+SpecLite is an artifact-first AI development workflow that stores phase outputs in `runs/<run_id>/`.
 
-## Quick reference
+## Core model
 
-| Phase | Role | Command |
-|-------|------|---------|
-| 0. Discovery (optional) | Research analyst | `./tools/run-phase.sh discovery [run_dir] [--topics "topic1,topic2"]` |
-| 1. Requirements | Product manager | `./tools/run-phase.sh requirements [run_dir] [--project "Name"]` |
-| 2. Research | Senior engineer | `./tools/run-phase.sh research [run_dir] [--roots path1,path2]` |
-| 3. Plan | Technical lead | `./tools/run-phase.sh plan [run_dir]` |
-| 4. Implementation | Implementing engineer | `./tools/run-phase.sh implementation [run_dir]` |
-| 5. Validation | — | `./tools/run-phase.sh validation [run_dir] [--test-cmd "cmd"]` |
-| 6. Version control | — | `./tools/run-phase.sh version-control [run_dir] [--status] [--commit "msg"]` |
+Canonical phases:
+- discovery
+- requirements
+- research
+- plan
+- implementation
+- validation
+- version-control
 
-## Key Features
+Higher-level workflows:
+- brainstorm
+- debug
+- enhance
+- orchestrate
+- status
 
-- **Parallel Research**: Spawns specialized subagents (architecture, patterns, dependencies, gaps, risks)
-- **Web Search**: Discovery phase searches external sources for best practices and solutions
-- **Task Dependencies**: Plan phase tracks which tasks can run in parallel vs sequentially
-- **Isolated Context**: Each run directory prevents context rot across projects
+## Key ideas
 
-## Setup and new run
+- Preserve traceable run artifacts instead of relying on chat history.
+- Route user intent into the smallest correct workflow path.
+- Apply small specialist overlays where useful.
+- Keep the canonical phase outputs as the durable contract.
+
+## Setup
 
 ```bash
 ./tools/setup.sh
 ./tools/new-run.sh "Project Name"
 ```
 
-The framework root is the directory containing `tools/`. When copied into a project (e.g. `ai-framework/`), run commands from the project root with the framework path: `./ai-framework/tools/run-phase.sh requirements "$RUN_DIR"`.
+## Integration commands
 
-## Phase details
+```bash
+./tools/install-integrations.sh --codex --kiro --cursor
+./tools/install-integrations.sh --project
+```
 
-- **discovery** – workflows/discovery/workflow.md
-- **requirements** – workflows/requirements/workflow.md
-- **research** – workflows/research/workflow.md
-- **plan** – workflows/plan/workflow.md
-- **implementation** – workflows/implementation/workflow.md
-- **validation** – workflows/validation/workflow.md
-- **version-control** – workflows/version-control/workflow.md
+## Canonical phase commands
 
-Read the relevant workflow file for role, behavior, and phase-specific commands.
+```bash
+./tools/run-phase.sh discovery [run_dir] [--topics "topic1,topic2"]
+./tools/run-phase.sh requirements [run_dir] [--project "Name"]
+./tools/run-phase.sh research [run_dir] [--roots path1,path2]
+./tools/run-phase.sh plan [run_dir]
+./tools/run-phase.sh implementation [run_dir]
+./tools/run-phase.sh validation [run_dir] [--test-cmd "cmd"]
+./tools/run-phase.sh version-control [run_dir] [--status] [--commit "msg"]
+```
+
+## Reference docs
+
+- `README.md`
+- `QUICKREF.md`
+- `EXAMPLES.md`
+- `integrations/README.md`
+- `workflows/README.md`

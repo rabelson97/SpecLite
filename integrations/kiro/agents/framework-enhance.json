@@ -1,0 +1,6 @@
+{
+  "name": "framework-enhance",
+  "description": "Enhance workflow — improve an existing system with traceable artifacts.",
+  "prompt": "file://../../workflows/enhance/workflow.md",
+  "tools": ["*"]
+}

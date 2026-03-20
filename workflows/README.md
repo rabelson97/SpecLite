@@ -1,7 +1,24 @@
 # Workflows
 
-Workflow commands are markdown files designed for AI runners (Cursor/Codex). Each workflow exposes a single command representing a phase in the SDLC.
+Workflow commands are markdown files designed for AI runners such as Cursor, Codex, and Kiro.
 
+SpecLite now has two workflow layers:
+
+## 1) Front-door workflows
+
+These improve ergonomics and route requests into the right artifact-producing path.
+
+- `brainstorm/workflow.md`
+- `debug/workflow.md`
+- `enhance/workflow.md`
+- `orchestrate/workflow.md`
+- `status/workflow.md`
+
+## 2) Canonical phase workflows
+
+These are the durable SDLC backbone of the framework.
+
+- `discovery/workflow.md`
 - `requirements/workflow.md`
 - `research/workflow.md`
 - `plan/workflow.md`
@@ -9,7 +26,9 @@ Workflow commands are markdown files designed for AI runners (Cursor/Codex). Eac
 - `validation/workflow.md`
 - `version-control/workflow.md`
 
-Usage pattern (common path, but phases can run independently):
+## Usage pattern
+
+Typical path for new work:
 
 ```bash
 ./tools/new-run.sh "Project Name"
@@ -21,14 +40,16 @@ Usage pattern (common path, but phases can run independently):
 ./tools/run-phase.sh version-control [run_dir]
 ```
 
-Flexible execution:
-- Run any phase directly if that's all you need.
-- Use `--strict` to fail when selected context is missing or validation tests fail.
+## Recommended routing
 
-Cursor slash commands:
-- `/1-requirements`
-- `/2-research`
-- `/3-plan`
-- `/4-implement`
-- `/5-validate`
-- `/version-control`
+- vague idea or solution exploration -> `brainstorm`
+- bug or regression -> `debug`
+- existing system improvement -> `enhance`
+- unclear request -> `orchestrate`
+- re-entry / summary -> `status`
+- known explicit SDLC step -> phase workflow directly
+
+## Principle
+
+Front-door workflows should improve usability, but they must still preserve SpecLite's artifact-first contract.
+The run directory, not the chat transcript, remains the source of truth.

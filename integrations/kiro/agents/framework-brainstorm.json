@@ -1,0 +1,6 @@
+{
+  "name": "framework-brainstorm",
+  "description": "Brainstorm workflow — explore options before implementation.",
+  "prompt": "file://../../workflows/brainstorm/workflow.md",
+  "tools": ["*"]
+}
