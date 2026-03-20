@@ -135,15 +135,15 @@ if [[ "$do_cursor" == "true" ]]; then
   CURSOR_PHASES=(
     "brainstorm:brainstorm"
     "debug:debug"
-    "0-discovery:discovery"
+    "discovery:discovery"
     "enhance:enhance"
     "orchestrate:orchestrate"
-    "1-requirements:requirements"
-    "2-research:research"
-    "3-plan:plan"
-    "4-implement:implementation"
+    "requirements:requirements"
+    "research:research"
+    "plan:plan"
+    "implement:implementation"
     "status:status"
-    "5-validate:validation"
+    "validate:validation"
     "version-control:version-control"
   )
   for entry in "${CURSOR_PHASES[@]}"; do
