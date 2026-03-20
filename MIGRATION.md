@@ -1,131 +1,98 @@
 # SpecLite Migration Guide
 
-## What's New
+## What's new in 2.2
 
-SpecLite is the evolution of the ai-assisted-framework with modern AI capabilities:
+SpecLite now has a smoother front door while keeping the same artifact-first backbone.
 
-### New Features
+### New capabilities
 
-1. **Discovery Phase** - Optional web research before codebase analysis
-2. **Parallel Research** - Specialized subagents analyze codebase simultaneously
-3. **Task Dependencies** - Plan phase tracks parallel vs sequential execution
-4. **Enhanced Workflows** - Updated to leverage latest AI tooling
+1. **Intent-based workflows**
+   - `brainstorm`
+   - `debug`
+   - `enhance`
+   - `orchestrate`
+   - `status`
 
-### Breaking Changes
+2. **Lightweight specialist overlays**
+   - reusable agent roles in `agents/`
+   - reusable framework skills in `skills/`
 
-**None.** SpecLite is fully backward compatible. Existing runs and workflows continue to work.
+3. **Expanded integrations**
+   - more Codex skills
+   - more Cursor slash commands
+   - more Kiro agents
 
-## Upgrading
+## Breaking changes
 
-### 1. Update Integrations
+**None.** Existing runs and canonical phase workflows continue to work.
 
-Re-run the install script to add discovery phase:
+## Upgrade steps
+
+### 1. Pull the latest version
+
+```bash
+git pull
+```
+
+### 2. Reinstall integrations
 
 ```bash
 ./tools/install-integrations.sh --codex --kiro --cursor
 ```
 
-Or for project-scoped:
+Or for project-scoped installation:
 
 ```bash
 cd /path/to/your/project
 /path/to/speclite/tools/install-integrations.sh --project
 ```
 
-### 2. Restart Editors
+### 3. Restart or reload your editor
 
-- **Codex**: Restart the CLI
-- **Cursor**: Reload window (Cmd/Ctrl + Shift + P → "Reload Window")
-- **Kiro**: No restart needed
+- **Codex**: restart
+- **Cursor**: reload window
+- **Kiro**: re-open if needed
 
-### 3. Verify New Commands
+## Verify new commands
 
-Check that discovery phase is available:
+### Cursor
 
-**Cursor:**
-```
-/0-discovery
-```
-
-**Kiro:**
-```bash
-kiro chat --agent framework-discovery
+```text
+/brainstorm
+/debug
+/enhance
+/orchestrate
+/status
 ```
 
-**Codex:**
-```
-@framework-discovery
-```
+### Codex
 
-## Using New Features
-
-### Discovery Phase (Optional)
-
-Add before requirements phase for external research:
-
-```bash
-RUN_DIR=$(./tools/new-run.sh "My Project")
-./tools/run-phase.sh discovery "$RUN_DIR" --topics "auth,testing"
-./tools/run-phase.sh requirements "$RUN_DIR"
-# ... continue with other phases
+```text
+@framework-brainstorm
+@framework-debug
+@framework-enhance
+@framework-orchestrate
+@framework-status
 ```
 
-### Parallel Research
-
-No changes needed - research phase automatically uses parallel subagents:
+### Kiro
 
 ```bash
-./tools/run-phase.sh research "$RUN_DIR"
+kiro chat --agent framework-brainstorm
+kiro chat --agent framework-debug
+kiro chat --agent framework-enhance
+kiro chat --agent framework-orchestrate
+kiro chat --agent framework-status
 ```
 
-The AI will spawn 5 specialized agents in parallel:
-- Architecture Agent
-- Patterns Agent
-- Dependencies Agent
-- Gaps Agent
-- Risks Agent
+## Recommended adoption path
 
-### Task Dependencies in Plans
+- Keep using the canonical phases if you already have a disciplined workflow.
+- Start using **orchestrate** as the default front door for natural-language requests.
+- Use **status** for handoffs and returning to a run after time away.
+- Use **enhance** and **debug** to reduce manual routing overhead.
 
-When creating plans, the AI now tracks dependencies:
+## Compatibility note
 
-```markdown
-### Phase 1: Setup infrastructure
-- **Dependencies**: None
-- **Parallel**: Can run independently
-
-### Phase 2: Add feature A
-- **Dependencies**: Phase 1
-- **Parallel**: No (requires Phase 1)
-
-### Phase 3: Add feature B
-- **Dependencies**: Phase 1
-- **Parallel**: Yes (with Phase 2)
-```
-
-## Existing Runs
-
-All existing runs continue to work without modification. The new discovery phase is optional and doesn't affect existing workflows.
-
-## Rollback
-
-If you need to revert to the old behavior:
-
-1. Remove discovery workflow:
-   ```bash
-   rm workflows/discovery/workflow.md
-   ```
-
-2. Remove discovery integrations:
-   ```bash
-   rm ~/.codex/skills/framework-discovery
-   rm ~/.codex/prompts/framework.discovery.md
-   rm ~/.kiro/agents/framework-discovery.json
-   rm ~/.cursor/commands/0-discovery.md
-   ```
-
-3. Use old workflows as before
-
-## Questions?
-
-See [EXAMPLES.md](EXAMPLES.md) for detailed usage examples of new features.
+SpecLite 2.2 adds ergonomics and shareability, not a new storage model.
+The run directory is still the contract.

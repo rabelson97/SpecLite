@@ -1,0 +1,6 @@
+{
+  "name": "framework-status",
+  "description": "Status workflow — summarize run status and next steps.",
+  "prompt": "file://../../workflows/status/workflow.md",
+  "tools": ["*"]
+}

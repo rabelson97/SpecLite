@@ -1,0 +1,6 @@
+{
+  "name": "framework-orchestrate",
+  "description": "Orchestrate workflow — route requests into the right SpecLite path.",
+  "prompt": "file://../../workflows/orchestrate/workflow.md",
+  "tools": ["*"]
+}

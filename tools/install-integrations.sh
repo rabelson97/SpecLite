@@ -69,14 +69,32 @@ else
   CURSOR_DEST="$HOME/.cursor/commands"
 fi
 
-WORKFLOWS=("discovery:discovery" "requirements:requirements" "research:research" "plan:plan" "implementation:implement" "validation:validate" "version-control:version-control")
+WORKFLOWS=(
+  "brainstorm:brainstorm"
+  "debug:debug"
+  "discovery:discovery"
+  "enhance:enhance"
+  "orchestrate:orchestrate"
+  "requirements:requirements"
+  "research:research"
+  "plan:plan"
+  "implementation:implement"
+  "status:status"
+  "validation:validate"
+  "version-control:version-control"
+)
 CODEX_SKILLS=(
   "ai-assisted-framework:$FRAMEWORK_PATH"
+  "framework-brainstorm:$FRAMEWORK_PATH/integrations/codex/skills/framework-brainstorm"
+  "framework-debug:$FRAMEWORK_PATH/integrations/codex/skills/framework-debug"
   "framework-discovery:$FRAMEWORK_PATH/integrations/codex/skills/framework-discovery"
+  "framework-enhance:$FRAMEWORK_PATH/integrations/codex/skills/framework-enhance"
+  "framework-orchestrate:$FRAMEWORK_PATH/integrations/codex/skills/framework-orchestrate"
   "framework-requirements:$FRAMEWORK_PATH/integrations/codex/skills/framework-requirements"
   "framework-research:$FRAMEWORK_PATH/integrations/codex/skills/framework-research"
   "framework-plan:$FRAMEWORK_PATH/integrations/codex/skills/framework-plan"
   "framework-implement:$FRAMEWORK_PATH/integrations/codex/skills/framework-implement"
+  "framework-status:$FRAMEWORK_PATH/integrations/codex/skills/framework-status"
   "framework-validate:$FRAMEWORK_PATH/integrations/codex/skills/framework-validate"
   "framework-version-control:$FRAMEWORK_PATH/integrations/codex/skills/framework-version-control"
 )
@@ -114,7 +132,20 @@ fi
 
 if [[ "$do_cursor" == "true" ]]; then
   mkdir -p "$CURSOR_DEST"
-  CURSOR_PHASES=("0-discovery:discovery" "1-requirements:requirements" "2-research:research" "3-plan:plan" "4-implement:implementation" "5-validate:validation" "version-control:version-control")
+  CURSOR_PHASES=(
+    "brainstorm:brainstorm"
+    "debug:debug"
+    "0-discovery:discovery"
+    "enhance:enhance"
+    "orchestrate:orchestrate"
+    "1-requirements:requirements"
+    "2-research:research"
+    "3-plan:plan"
+    "4-implement:implementation"
+    "status:status"
+    "5-validate:validation"
+    "version-control:version-control"
+  )
   for entry in "${CURSOR_PHASES[@]}"; do
     cmd_name="${entry%%:*}"
     phase="${entry##*:}"

@@ -1,8 +1,8 @@
 # Integrations
 
-This framework works with **Codex** (CLI + Cursor plugin), **Kiro CLI**, and **Cursor** via symlinks only. The framework stays in one place; symlinks point to it.
+SpecLite works with **Codex**, **Kiro**, and **Cursor** via symlinks only. The framework stays in one place; integrations point to it.
 
-## Install (recommended)
+## Install
 
 From the framework directory:
 
@@ -11,56 +11,84 @@ From the framework directory:
 ```
 
 This creates symlinks in `~/.codex/`, `~/.kiro/`, and `~/.cursor/`. **No files are copied.**
-Use `--project` to install into a project-local `.codex/`, `.kiro/`, and `.cursor/` from that project root.
+Use `--project` to install into project-local `.codex/`, `.kiro/`, and `.cursor/` folders from that project root.
 
-## Codex (CLI + Cursor plugin)
+## Why symlinks
+
+- one canonical framework copy
+- easy upgrades
+- shareable across many repos
+- no prompt drift caused by copied files
+
+## Codex
 
 Codex uses two locations:
-- **Skills** (`~/.codex/skills/`) — for skill-based invocation in the Codex plugin
-- **Prompts** (`~/.codex/prompts/`) — for slash commands in Codex/Cursor (e.g. `/prompts:framework.requirements`)
 
-Installed skills (all symlinks to canonical workflows):
-- `ai-assisted-framework` (umbrella skill)
+- **Skills** (`~/.codex/skills/`) — reusable skill entry points
+- **Prompts** (`~/.codex/prompts/`) — slash-command style prompts
+
+Installed Codex skills:
+
+- `ai-assisted-framework`
+- `framework-brainstorm`
+- `framework-debug`
 - `framework-discovery`
+- `framework-enhance`
+- `framework-orchestrate`
 - `framework-requirements`
 - `framework-research`
 - `framework-plan`
 - `framework-implement`
+- `framework-status`
 - `framework-validate`
 - `framework-version-control`
 
-The install script symlinks both. Restart Codex or reload the Cursor window for prompts to appear in the slash menu.
+Restart Codex after installation so prompts and skills are re-indexed.
 
----
+## Kiro
 
-## Kiro CLI
-
-Agents are symlinked to `~/.kiro/agents/`. The `file://` paths in each config are relative to the config file; symlinks preserve correct resolution.
+Agents are symlinked to `~/.kiro/agents/`.
 
 ### Available agents
 
-| Agent | Phase |
-|-------|-------|
-| `framework-discovery` | Discovery (research analyst) |
-| `framework-requirements` | Requirements (product manager) |
-| `framework-research` | Research (senior engineer) |
-| `framework-plan` | Plan (technical lead) |
+| Agent | Purpose |
+|-------|---------|
+| `framework-brainstorm` | Explore options before planning |
+| `framework-debug` | Diagnose issues systematically |
+| `framework-discovery` | External discovery and web research |
+| `framework-enhance` | Improve an existing system |
+| `framework-orchestrate` | Route requests to the right path |
+| `framework-requirements` | Requirements and scope shaping |
+| `framework-research` | Codebase analysis |
+| `framework-plan` | Technical planning |
 | `framework-implement` | Implementation |
-| `framework-validate` | Validation |
-| `framework-version-control` | Version control |
-
-Switch to an agent in Kiro to run that phase. Each agent loads the corresponding workflow as its prompt.
-
----
+| `framework-status` | Run summarization |
+| `framework-validate` | Validation and verification |
+| `framework-version-control` | Git and release hygiene |
 
 ## Cursor
 
-Cursor commands are symlinked directly to the phase workflows:
+Cursor commands are symlinked directly to workflow markdown files.
 
+Available commands:
+
+- `/brainstorm`
+- `/debug`
 - `/0-discovery`
+- `/enhance`
+- `/orchestrate`
 - `/1-requirements`
 - `/2-research`
 - `/3-plan`
 - `/4-implement`
+- `/status`
 - `/5-validate`
 - `/version-control`
+
+## Recommended mental model
+
+- use **`orchestrate`** when the user just describes intent
+- use **phase commands** when you already know the exact workflow step
+- use **status** when returning to a run after a break
+
+This gives SpecLite a smoother front door while preserving the original artifact contract.
