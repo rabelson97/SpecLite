@@ -1,17 +1,17 @@
 # Integrations
 
-SpecLite works with **Codex**, **Kiro**, and **Cursor** via symlinks only. The framework stays in one place; integrations point to it.
+SpecLite works with **Codex**, **Kiro**, **Cursor**, and **Claude Code** via symlinks. The framework stays in one place; integrations point to it.
 
 ## Install
 
 From the framework directory:
 
 ```bash
-./tools/install-integrations.sh --codex --kiro --cursor
+./tools/install-integrations.sh --codex --kiro --cursor --claude
 ```
 
-This creates symlinks in `~/.codex/`, `~/.kiro/`, and `~/.cursor/`. **No files are copied.**
-Use `--project` to install into project-local `.codex/`, `.kiro/`, and `.cursor/` folders from that project root.
+This creates symlinks in `~/.codex/`, `~/.kiro/`, `~/.cursor/`, and `~/.claude/`. **No files are copied.**
+Use `--project` to install into project-local `.codex/`, `.kiro/`, `.cursor/`, and `.claude/` folders from that project root.
 
 ## Why symlinks
 
@@ -23,60 +23,24 @@ Use `--project` to install into project-local `.codex/`, `.kiro/`, and `.cursor/
 ## Codex
 
 Codex uses two locations:
-
-- **Skills** (`~/.codex/skills/`) — reusable skill entry points
-- **Prompts** (`~/.codex/prompts/`) — slash-command style prompts
-
-Installed Codex skills:
-
-- `ai-assisted-framework`
-- `framework-brainstorm`
-- `framework-debug`
-- `framework-discovery`
-- `framework-enhance`
-- `framework-orchestrate`
-- `framework-requirements`
-- `framework-research`
-- `framework-plan`
-- `framework-implement`
-- `framework-status`
-- `framework-validate`
-- `framework-version-control`
-
-Restart Codex after installation so prompts and skills are re-indexed.
-
-## Kiro
-
-Agents are symlinked to `~/.kiro/agents/`.
-
-### Available agents
-
-| Agent | Purpose |
-|-------|---------|
-| `framework-brainstorm` | Explore options before planning |
-| `framework-debug` | Diagnose issues systematically |
-| `framework-discovery` | External discovery and web research |
-| `framework-enhance` | Improve an existing system |
-| `framework-orchestrate` | Route requests to the right path |
-| `framework-requirements` | Requirements and scope shaping |
-| `framework-research` | Codebase analysis |
-| `framework-plan` | Technical planning |
-| `framework-implement` | Implementation |
-| `framework-status` | Run summarization |
-| `framework-validate` | Validation and verification |
-| `framework-version-control` | Git and release hygiene |
+- **Skills** (`~/.codex/skills/`)
+- **Prompts** (`~/.codex/prompts/`)
 
 ## Cursor
 
-Cursor commands are symlinked directly to workflow markdown files.
+Cursor commands are symlinked to `~/.cursor/commands/`.
 
-Available commands:
+## Claude Code
 
+Claude Code commands are symlinked to `~/.claude/commands/`.
+
+Available command names for both Cursor and Claude Code:
 - `/brainstorm`
 - `/orchestrate`
 - `/enhance`
 - `/debug`
 - `/status`
+- `/workflow`
 - `/discovery`
 - `/requirements`
 - `/research`
@@ -85,11 +49,22 @@ Available commands:
 - `/validate`
 - `/version-control`
 
-## Recommended mental model
+## Kiro
 
-- use **`orchestrate`** when the user just describes intent
-- use **front-door workflows** for exploration, debugging, and improvement work
-- use **phase commands** when you already know the exact SDLC step
-- use **status** when returning to a run after a break
+Agents are symlinked to `~/.kiro/agents/`.
 
-This gives SpecLite a smoother front door while preserving the original artifact contract.
+## Project-local SpecLite
+
+For project-specific behavior, keep local files in:
+
+```text
+.speclite/
+  project.md
+  workflows/
+  docs/
+  rules/
+  skills/
+  agents/
+```
+
+This lets the repo define its own local workflows, docs, and rules without forking the framework.

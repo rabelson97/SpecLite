@@ -21,7 +21,7 @@ ensure_link() {
 }
 
 usage() {
-  echo "Usage: $0 [--codex] [--kiro] [--cursor] [--project]"
+  echo "Usage: $0 [--codex] [--kiro] [--cursor] [--claude] [--project]"
   echo ""
   echo "  --codex   Symlink for Codex: skills + prompts (~/.codex/skills, ~/.codex/prompts)"
   echo "  --kiro    Symlink for Kiro CLI (~/.kiro/agents/)"
@@ -36,6 +36,7 @@ usage() {
 do_codex=false
 do_kiro=false
 do_cursor=false
+do_claude=false
 project_scope=false
 
 while [[ $# -gt 0 ]]; do
@@ -43,13 +44,14 @@ while [[ $# -gt 0 ]]; do
     --codex) do_codex=true; shift ;;
     --kiro) do_kiro=true; shift ;;
     --cursor) do_cursor=true; shift ;;
+    --claude) do_claude=true; shift ;;
     --project) project_scope=true; shift ;;
     -h|--help) usage ;;
     *) echo "Unknown: $1"; usage ;;
   esac
 done
 
-if [[ "$do_codex" != "true" && "$do_kiro" != "true" && "$do_cursor" != "true" ]]; then
+if [[ "$do_codex" != "true" && "$do_kiro" != "true" && "$do_cursor" != "true" && "$do_claude" != "true" ]]; then
   do_codex=true
   do_kiro=true
 fi
@@ -62,11 +64,13 @@ if [[ "$project_scope" == "true" ]]; then
   CODEX_PROMPTS_DEST=".codex/prompts"
   KIRO_DEST=".kiro/agents"
   CURSOR_DEST=".cursor/commands"
+  CLAUDE_DEST=".claude/commands"
 else
   CODEX_SKILLS_DEST="$HOME/.codex/skills"
   CODEX_PROMPTS_DEST="$HOME/.codex/prompts"
   KIRO_DEST="$HOME/.kiro/agents"
   CURSOR_DEST="$HOME/.cursor/commands"
+  CLAUDE_DEST="$HOME/.claude/commands"
 fi
 
 WORKFLOWS=(
@@ -82,6 +86,7 @@ WORKFLOWS=(
   "status:status"
   "validation:validate"
   "version-control:version-control"
+  "workflow:workflow"
 )
 CODEX_SKILLS=(
   "ai-assisted-framework:$FRAMEWORK_PATH"
@@ -97,6 +102,7 @@ CODEX_SKILLS=(
   "framework-status:$FRAMEWORK_PATH/integrations/codex/skills/framework-status"
   "framework-validate:$FRAMEWORK_PATH/integrations/codex/skills/framework-validate"
   "framework-version-control:$FRAMEWORK_PATH/integrations/codex/skills/framework-version-control"
+  "framework-workflow:$FRAMEWORK_PATH/integrations/codex/skills/framework-workflow"
 )
 
 if [[ "$do_codex" == "true" ]]; then
@@ -145,6 +151,7 @@ if [[ "$do_cursor" == "true" ]]; then
     "status:status"
     "validate:validation"
     "version-control:version-control"
+    "workflow:workflow"
   )
   for entry in "${CURSOR_PHASES[@]}"; do
     cmd_name="${entry%%:*}"
@@ -159,3 +166,16 @@ fi
 
 echo ""
 echo "Done. Restart Codex/Cursor to pick up prompt changes."
+
+
+if [[ "$do_claude" == "true" ]]; then
+  mkdir -p "$CLAUDE_DEST"
+  CLAUDE_COMMANDS=(brainstorm debug discovery enhance orchestrate requirements research plan implement status validate version-control workflow)
+  for name in "${CLAUDE_COMMANDS[@]}"; do
+    src="$FRAMEWORK_PATH/integrations/claude/commands/$name.md"
+    dest="$CLAUDE_DEST/$name.md"
+    if [[ -f "$src" ]]; then
+      ensure_link "$src" "$dest" "Claude command"
+    fi
+  done
+fi

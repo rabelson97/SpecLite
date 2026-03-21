@@ -1,58 +1,79 @@
 # SpecLite
 
-[![Artifact-first workflow](https://img.shields.io/badge/workflow-artifact--first-4f46e5)](#how-it-works)
-[![Spec-driven development](https://img.shields.io/badge/method-spec--driven-0f766e)](#how-it-works)
-[![Works with Codex](https://img.shields.io/badge/Codex-supported-black)](#works-with-your-tools)
-[![Works with Cursor](https://img.shields.io/badge/Cursor-supported-2563eb)](#works-with-your-tools)
-[![Works with Kiro](https://img.shields.io/badge/Kiro-supported-7c3aed)](#works-with-your-tools)
+<p align="center">
+  <img src="assets/speclite-banner.svg" alt="SpecLite banner" width="100%" />
+</p>
 
-**SpecLite** is an **artifact-first AI workflow for shipping software**.
+<p align="center">
+  <a href="#how-it-works"><img alt="Artifact-first workflow" src="https://img.shields.io/badge/workflow-artifact--first-4f46e5"></a>
+  <a href="#how-it-works"><img alt="Spec-driven development" src="https://img.shields.io/badge/method-spec--driven-0f766e"></a>
+  <a href="#works-with-your-tools"><img alt="Codex supported" src="https://img.shields.io/badge/Codex-supported-black"></a>
+  <a href="#works-with-your-tools"><img alt="Cursor supported" src="https://img.shields.io/badge/Cursor-supported-2563eb"></a>
+  <a href="#works-with-your-tools"><img alt="Kiro supported" src="https://img.shields.io/badge/Kiro-supported-7c3aed"></a>
+  <a href="#works-with-your-tools"><img alt="Claude Code supported" src="https://img.shields.io/badge/Claude%20Code-supported-D97706"></a>
+</p>
+
+**SpecLite** is an **artifact-first AI workflow framework for shipping software**.
 
 It gives you the speed of modern agent workflows, but with a cleaner spine:
 **brainstorm -> spec -> research -> plan -> implement -> validate -> ship**.
 
-Instead of letting important decisions disappear into chat history, SpecLite writes the work down in structured run artifacts your team can review, diff, reuse, and trust.
+Instead of letting key decisions vanish into chat history, SpecLite writes them into structured artifacts your team can review, diff, reuse, and trust.
 
 ## Why people use it
 
-Because most AI coding workflows feel like this:
-- lots of momentum
-- lots of prompts
-- not much traceability
-- hard handoffs
-- fuzzy validation
+Most AI coding setups are great at momentum and terrible at memory.
 
-SpecLite fixes that without turning your process into a ceremony factory.
+They produce:
+- lots of prompts
+- lots of partial context
+- weak handoffs
+- fuzzy validation
+- tribal knowledge instead of explicit project rules
+
+SpecLite fixes that without turning your workflow into process theater.
 
 You get:
-- **fast front-door commands** like `brainstorm`, `debug`, `enhance`, and `orchestrate`
+- **front-door workflows** like `brainstorm`, `debug`, `enhance`, `orchestrate`, and `workflow`
 - **spec-driven execution** when the work gets real
-- **run directories** that preserve decisions, findings, and outcomes
-- **portable integrations** for **Codex**, **Cursor**, and **Kiro**
-- **cleaner handoffs** between idea, implementation, and verification
+- **project-local framework files** in `.speclite/`
+- **docs and rules** so the codebase can declare how it works
+- **portable integrations** for **Codex**, **Cursor**, **Kiro**, and **Claude Code**
 
-## The pitch
+## What makes it different
 
-If agent kits feel exciting but messy, and heavyweight spec systems feel rigorous but slow, **SpecLite sits in the sweet spot**.
+SpecLite is not just a prompt bundle.
+It is a **spec-driven framework** with four layers:
 
-It is built for people who want:
-- the speed of AI-assisted development
-- the clarity of spec-driven work
-- the portability of reusable workflows
-- the confidence that comes from explicit validation
+1. **Workflows** — how work gets done
+2. **Docs** — what the project knows
+3. **Rules** — how the codebase should behave
+4. **Runs** — what actually happened during execution
 
-## What it feels like to use
+That combination is what turns AI-assisted coding into something repeatable.
 
-Start from intent:
-- “brainstorm this feature”
-- “debug this regression”
-- “enhance this flow”
-- “what’s the status of this run?”
+## The project-local framework
 
-Then let SpecLite route you into the right artifact-producing path.
+Each repo can carry its own SpecLite layer in `.speclite/`:
 
-When you need rigor, the underlying SDLC phases are still there.
-When you need speed, the front door stays conversational.
+```text
+.speclite/
+  project.md
+  workflows/
+  docs/
+  rules/
+  skills/
+  agents/
+```
+
+This is where a project defines:
+- custom workflows
+- architecture docs
+- feature docs
+- engineering rules
+- local skills and agent overlays
+
+So SpecLite is no longer guessing how your repo should work — the repo can tell it.
 
 ## Quickstart
 
@@ -68,24 +89,13 @@ RUN_DIR=$(./tools/new-run.sh "My Project")
 ./tools/run-phase.sh version-control "$RUN_DIR" --status --commit "Implement feature"
 ```
 
+To scaffold a project-local framework layer:
+
+```bash
+cp -R templates/project/.speclite /path/to/your-repo/.speclite
+```
+
 `runs/` is gitignored and created on demand; the repo ships with no run history.
-
-## What you can do with it
-
-### Explore before coding
-Use **`brainstorm`** when the idea is still fuzzy and you want options, trade-offs, and a recommended direction.
-
-### Turn vague requests into real work
-Use **`orchestrate`** as the front door when someone says what they want, but not how to structure it.
-
-### Improve existing systems without chaos
-Use **`enhance`** to route improvements through the smallest useful set of phases.
-
-### Debug like an adult
-Use **`debug`** to turn “it’s broken” into reproduction notes, root-cause hypotheses, and a clean fix path.
-
-### Return after a break without rereading everything
-Use **`status`** to summarize a run, blockers, and next steps.
 
 ## Core workflows
 
@@ -97,6 +107,7 @@ These are the commands you reach for first:
 - **`enhance`** — improve an existing feature or codebase
 - **`debug`** — isolate, explain, and fix regressions
 - **`status`** — summarize what’s done, what’s missing, and what’s next
+- **`workflow`** — create, inspect, and extend workflows
 
 ### Backbone phases
 These are the durable SDLC artifacts underneath:
@@ -111,15 +122,27 @@ These are the durable SDLC artifacts underneath:
 
 ## How it works
 
-SpecLite combines two useful ideas:
+SpecLite combines three useful ideas:
 
 1. **intent-driven workflows** for usability
 2. **artifact-driven phases** for reliability
+3. **project-local docs and rules** for grounding
 
 That means:
 - you can start from plain language
 - the framework routes you toward the right path
-- the actual work still lands in inspectable files under `runs/<run_id>/`
+- the actual work lands in inspectable files under `runs/<run_id>/`
+- local project rules can shape implementation choices
+
+## Resolution order
+
+When SpecLite looks for workflows, docs, rules, skills, or agents, it should resolve in this order:
+
+1. **project-local** — `.speclite/...`
+2. **user-level** — `~/.speclite/...`
+3. **built-in** — files shipped with SpecLite
+
+That model makes customization explicit instead of magical.
 
 ## Example paths
 
@@ -138,9 +161,9 @@ enhance -> research -> plan -> implementation -> validation
 debug -> research -> plan -> implementation -> validation
 ```
 
-### Re-entry after time away
+### Add a custom project workflow
 ```text
-status
+workflow new release-readiness
 ```
 
 ## Works with your tools
@@ -153,6 +176,22 @@ SpecLite is designed to be reusable across projects and editors.
 - `/enhance`
 - `/debug`
 - `/status`
+- `/workflow`
+- `/discovery`
+- `/requirements`
+- `/research`
+- `/plan`
+- `/implement`
+- `/validate`
+- `/version-control`
+
+### Claude Code commands
+- `/brainstorm`
+- `/orchestrate`
+- `/enhance`
+- `/debug`
+- `/status`
+- `/workflow`
 - `/discovery`
 - `/requirements`
 - `/research`
@@ -167,6 +206,7 @@ SpecLite is designed to be reusable across projects and editors.
 - `@framework-enhance`
 - `@framework-debug`
 - `@framework-status`
+- `@framework-workflow`
 - `@framework-discovery`
 - `@framework-requirements`
 - `@framework-research`
@@ -181,6 +221,7 @@ SpecLite is designed to be reusable across projects and editors.
 - `framework-enhance`
 - `framework-debug`
 - `framework-status`
+- `framework-workflow`
 - `framework-discovery`
 - `framework-requirements`
 - `framework-research`
@@ -198,6 +239,7 @@ You get:
 - a repeatable workflow
 - explicit research and planning artifacts
 - structured validation
+- project-local docs and rules
 - reusable integrations
 - a clean record of what happened and why
 
@@ -209,24 +251,16 @@ It aims to be:
 - **structured enough** to keep quality high
 - **light enough** to actually use every day
 - **flexible enough** to run only the phases you need
+- **grounded enough** to follow project-specific rules when they exist
 
 ## Who it is for
 
 SpecLite works especially well for:
 - solo builders who want less chaos in AI-assisted work
 - engineering teams standardizing AI workflows
-- people using Cursor, Codex, or Kiro heavily
+- people using Cursor, Codex, Claude Code, or Kiro heavily
 - feature work that needs real requirements and validation
-- debugging and enhancement work that benefits from written artifacts
-
-## Why it is shareable
-
-SpecLite is designed to travel well:
-- symlink-based installs instead of duplicated prompt bundles
-- reusable workflows and skills
-- no run history committed to git
-- editor-agnostic structure
-- artifacts that are easy to review and hand off
+- codebases that want explicit docs and local engineering rules
 
 ## Artifact contract
 
@@ -260,19 +294,20 @@ Each run stores its work in a predictable structure:
 No. Run the full pipeline when it helps, or just the parts you need.
 
 ### Is this only for one editor or one model?
-No. The structure is editor-agnostic and currently integrates with Codex, Cursor, and Kiro.
+No. The structure is editor-agnostic and currently integrates with Codex, Cursor, Claude Code, and Kiro.
 
 ### Is this a Spec Kit replacement?
-Not exactly. It lives in a similar neighborhood, but it is optimized for lighter day-to-day use, cleaner workflow routing, and artifact-first execution.
+Not exactly. It lives in a similar neighborhood, but it is optimized for lighter day-to-day use, cleaner workflow routing, project-local overrides, and artifact-first execution.
 
 ### Can teams use this?
-Yes. The run-directory model makes handoffs, review, and repeatability much easier.
+Yes. The run-directory model plus `.speclite/` makes handoffs, review, and repeatability much easier.
 
 ## More docs
 
 - `QUICKREF.md` — fast command reference
 - `EXAMPLES.md` — example usage patterns
 - `integrations/README.md` — editor integration details
+- `integrations/claude/README.md` — Claude Code notes
 - `workflows/README.md` — workflow catalog
 - `CHANGELOG.md` — notable changes
 - `MIGRATION.md` — upgrade notes

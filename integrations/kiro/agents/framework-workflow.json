@@ -1,0 +1,6 @@
+{
+  "name": "framework-workflow",
+  "description": "Workflow studio — create and inspect workflows.",
+  "prompt": "file://../../workflows/workflow/workflow.md",
+  "tools": ["*"]
+}
