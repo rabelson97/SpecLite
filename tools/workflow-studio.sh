@@ -21,7 +21,8 @@ list_workflows() {
   echo
   echo "Project workflows ($TARGET_ROOT/.speclite/workflows):"
   if [[ -d "$TARGET_ROOT/.speclite/workflows" ]]; then
-    find "$TARGET_ROOT/.speclite/workflows" -maxdepth 1 -type f -name '*.md' | xargs -r -n1 basename | sed 's/\.md$//' | sort | sed 's/^/  - /'
+    find "$TARGET_ROOT/.speclite/workflows" -maxdepth 1 -type f -name '*.md' \
+      ! -name 'README.md' ! -name '_*' | xargs -r -n1 basename | sed 's/\.md$//' | sort | sed 's/^/  - /'
   else
     echo "  (none)"
   fi

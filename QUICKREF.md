@@ -49,6 +49,9 @@ Use this to define project-specific workflow behavior, docs, and operating rules
 3. built-ins          SpecLite shipped defaults
 ```
 
+Commit `.speclite/` when it contains real project knowledge.
+Usually keep `.cursor/`, `.claude/`, `.codex/`, and `.kiro/` out of git unless shared intentionally.
+
 ## Shell commands
 
 ```bash

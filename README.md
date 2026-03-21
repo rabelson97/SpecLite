@@ -235,6 +235,10 @@ SpecLite is designed to be reusable across projects and editors.
 A prompt folder can get you started.
 SpecLite helps you keep going without losing the thread.
 
+**Commit guidance:**
+- commit `.speclite/` when it contains meaningful project docs, rules, and workflows
+- usually do **not** commit `.cursor/`, `.claude/`, `.codex/`, or `.kiro/` unless your team intentionally shares editor integration files
+
 You get:
 - a repeatable workflow
 - explicit research and planning artifacts
