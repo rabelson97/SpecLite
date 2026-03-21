@@ -66,7 +66,13 @@ RUN_DIR=$(./tools/new-run.sh "Project Name")
 ./tools/run-phase.sh version-control "$RUN_DIR" [--status] [--commit "msg"]
 
 # Scaffold project-local framework files
-cp -R templates/project/.speclite /path/to/your-repo/.speclite
+./tools/init-project.sh /path/to/your-repo
+
+# Workflow studio
+./tools/workflow-studio.sh list
+./tools/workflow-studio.sh explain plan
+./tools/workflow-studio.sh new release-readiness
+./tools/workflow-studio.sh doctor
 ```
 
 ## Editor commands

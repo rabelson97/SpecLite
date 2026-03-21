@@ -20,39 +20,6 @@ Use `--project` to install into project-local `.codex/`, `.kiro/`, `.cursor/`, a
 - shareable across many repos
 - no prompt drift caused by copied files
 
-## Codex
-
-Codex uses two locations:
-- **Skills** (`~/.codex/skills/`)
-- **Prompts** (`~/.codex/prompts/`)
-
-## Cursor
-
-Cursor commands are symlinked to `~/.cursor/commands/`.
-
-## Claude Code
-
-Claude Code commands are symlinked to `~/.claude/commands/`.
-
-Available command names for both Cursor and Claude Code:
-- `/brainstorm`
-- `/orchestrate`
-- `/enhance`
-- `/debug`
-- `/status`
-- `/workflow`
-- `/discovery`
-- `/requirements`
-- `/research`
-- `/plan`
-- `/implement`
-- `/validate`
-- `/version-control`
-
-## Kiro
-
-Agents are symlinked to `~/.kiro/agents/`.
-
 ## Project-local SpecLite
 
 For project-specific behavior, keep local files in:
@@ -67,4 +34,36 @@ For project-specific behavior, keep local files in:
   agents/
 ```
 
-This lets the repo define its own local workflows, docs, and rules without forking the framework.
+Initialize that structure with:
+
+```bash
+./tools/init-project.sh /path/to/your-repo
+```
+
+## Workflow studio
+
+Use the workflow tooling to manage project-local workflows:
+
+```bash
+./tools/workflow-studio.sh list
+./tools/workflow-studio.sh explain brainstorm
+./tools/workflow-studio.sh new release-readiness
+./tools/workflow-studio.sh doctor
+```
+
+## Command surface
+
+Available command names for Cursor and Claude Code:
+- `/brainstorm`
+- `/orchestrate`
+- `/enhance`
+- `/debug`
+- `/status`
+- `/workflow`
+- `/discovery`
+- `/requirements`
+- `/research`
+- `/plan`
+- `/implement`
+- `/validate`
+- `/version-control`
