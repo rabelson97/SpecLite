@@ -27,7 +27,8 @@ resolve_run_dir() {
     return 0
   fi
 
-  local runs_dir="$ROOT_DIR/runs"
+  local runs_dir
+  runs_dir="$(speclite_runs_dir)"
   [[ -d "$runs_dir" ]] || fail "no runs directory found; create one with tools/new-run.sh"
 
   local runs=()
@@ -437,7 +438,7 @@ case "$phase" in
       test_output="$run_dir/validation/test-output.txt"
       ensure_parent_dir "$test_output"
       test_exit=0
-      (cd "$ROOT_DIR" && bash -lc "$test_cmd") > "$test_output" 2>&1 || test_exit=$?
+      (cd "$(speclite_project_root)" && bash -lc "$test_cmd") > "$test_output" 2>&1 || test_exit=$?
       printf "See %s\n" "$test_output" >> "$out"
 
       if [[ $test_exit -ne 0 ]]; then
@@ -499,20 +500,21 @@ case "$phase" in
     append_section "$out" "Summary"
     printf "(summarize status, diffs, and commit decisions)\n" >> "$out"
 
-    if [[ -d "$ROOT_DIR/.git" ]]; then
+    project_root="$(speclite_project_root)"
+    if [[ -d "$project_root/.git" ]]; then
       if [[ "$do_status" == "true" ]]; then
         append_section "$out" "Git Status"
-        (cd "$ROOT_DIR" && git status -sb) > "$run_dir/version-control/git-status.txt" 2>&1 || true
+        (cd "$project_root" && git status -sb) > "$run_dir/version-control/git-status.txt" 2>&1 || true
         printf "See %s\n" "$run_dir/version-control/git-status.txt" >> "$out"
 
         append_section "$out" "Git Diff Stat"
-        (cd "$ROOT_DIR" && git diff --stat) > "$run_dir/version-control/git-diff-stat.txt" 2>&1 || true
+        (cd "$project_root" && git diff --stat) > "$run_dir/version-control/git-diff-stat.txt" 2>&1 || true
         printf "See %s\n" "$run_dir/version-control/git-diff-stat.txt" >> "$out"
       fi
 
       if [[ "$do_diff" == "true" ]]; then
         append_section "$out" "Git Diff"
-        (cd "$ROOT_DIR" && git diff) > "$run_dir/version-control/git-diff.txt" 2>&1 || true
+        (cd "$project_root" && git diff) > "$run_dir/version-control/git-diff.txt" 2>&1 || true
         printf "See %s\n" "$run_dir/version-control/git-diff.txt" >> "$out"
       fi
 
@@ -525,7 +527,7 @@ case "$phase" in
         ensure_parent_dir "$commit_output"
         commit_exit=0
         (
-          cd "$ROOT_DIR"
+          cd "$project_root"
           git add -A
           git commit -m "$commit_msg"
         ) > "$commit_output" 2>&1 || commit_exit=$?
@@ -544,7 +546,7 @@ case "$phase" in
       fi
     else
       append_section "$out" "Notes"
-      printf "No git repository detected at %s\n" "$ROOT_DIR" >> "$out"
+      printf "No git repository detected at %s\n" "$project_root" >> "$out"
     fi
 
     echo "$out"

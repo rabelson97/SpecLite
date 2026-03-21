@@ -10,11 +10,13 @@ name="${1:-}"
 
 slug="$(slugify "$name")"
 run_id="$(now_slug)_$slug"
-run_dir="$ROOT_DIR/runs/$run_id"
+project_root="$(speclite_project_root)"
+runs_dir="$(speclite_runs_dir)"
+run_dir="$runs_dir/$run_id"
 
 ensure_dir "$run_dir"
 cat > "$run_dir/meta.json" <<META
-{"run_id":"$run_id","project_name":"$name","created_at":"$(now_iso)"}
+{"run_id":"$run_id","project_name":"$name","created_at":"$(now_iso)","project_root":"$project_root"}
 META
 
 for phase in discovery requirements research plan implementation validation version-control; do

@@ -4,6 +4,30 @@ set -euo pipefail
 now_iso() { date -u "+%Y-%m-%dT%H:%M:%SZ"; }
 now_slug() { date -u "+%Y%m%d_%H%M%S"; }
 
+speclite_project_root() {
+  if [[ -n "${SPECLITE_PROJECT_ROOT:-}" ]]; then
+    printf "%s\n" "$SPECLITE_PROJECT_ROOT"
+    return 0
+  fi
+
+  local dir="${PWD}"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -d "$dir/.speclite" ]]; then
+      printf "%s\n" "$dir"
+      return 0
+    fi
+    dir="$(dirname "$dir")"
+  done
+
+  printf "%s\n" "$PWD"
+}
+
+speclite_runs_dir() {
+  local project_root
+  project_root="$(speclite_project_root)"
+  printf "%s/.speclite/runs\n" "$project_root"
+}
+
 slugify() {
   local s="$1"
   s="$(printf \"%s\" \"$s\" | tr '[:upper:]' '[:lower:]')"
