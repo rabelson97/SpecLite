@@ -485,13 +485,18 @@ case "$phase" in
     fi
 
     append_section "$out" "Summary"
-    printf "(record pass/fail status and high-level findings)\n" >> "$out"
+    printf "Record whether the change appears ready, what was verified, and what still needs confidence.\n" >> "$out"
+    append_section "$out" "Relevant Rules / Docs"
+    printf "Rules:\n" >> "$out"
+    seed_rules_summary >> "$out"
+    printf "Docs:\n" >> "$out"
+    seed_docs_summary >> "$out"
     append_section "$out" "Notes"
     if [[ -n "$input_file" ]]; then
       [[ -f "$input_file" ]] || fail "input file not found: $input_file"
       cat "$input_file" >> "$out"
     else
-      printf "(add validation notes)\n" >> "$out"
+      printf -- "- What was tested\n- What passed\n- What still needs manual verification\n" >> "$out"
     fi
 
     if [[ -n "$test_cmd" ]]; then

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+usage() {
+  cat <<EOF
+SpecLite CLI
+
+Usage:
+  speclite init [project_path]
+  speclite new-run <name>
+  speclite run-phase <phase> [run_dir] [args...]
+  speclite workflow <list|explain|new|doctor> [name]
+  speclite resolve <workflow|doc|rule|skill|agent> <name>
+  speclite install [--codex] [--kiro] [--cursor] [--claude] [--project]
+  speclite setup
+EOF
+}
+
+cmd="${1:-}"
+shift || true
+
+case "$cmd" in
+  init)
+    exec "$ROOT_DIR/tools/init-project.sh" "${1:-$PWD}"
+    ;;
+  new-run)
+    exec "$ROOT_DIR/tools/new-run.sh" "$@"
+    ;;
+  run-phase)
+    exec "$ROOT_DIR/tools/run-phase.sh" "$@"
+    ;;
+  workflow)
+    exec "$ROOT_DIR/tools/workflow-studio.sh" "$@"
+    ;;
+  resolve)
+    exec "$ROOT_DIR/tools/spec-resolve.sh" "$PWD" "$@"
+    ;;
+  install)
+    exec "$ROOT_DIR/tools/install-integrations.sh" "$@"
+    ;;
+  setup)
+    exec "$ROOT_DIR/tools/setup.sh"
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

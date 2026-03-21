@@ -52,30 +52,28 @@ Use this to define project-specific workflow behavior, docs, and operating rules
 Commit `.speclite/` when it contains real project knowledge.
 Usually keep `.cursor/`, `.claude/`, `.codex/`, and `.kiro/` out of git unless shared intentionally.
 
-## Shell commands
+## CLI commands
 
 ```bash
 # Setup
 ./tools/setup.sh
-RUN_DIR=$(./tools/new-run.sh "Project Name")
+./bin/speclite init /path/to/your-repo
+RUN_DIR=$(./bin/speclite new-run "Project Name")
 
 # Backbone phases
-./tools/run-phase.sh discovery "$RUN_DIR" --topics "topic1,topic2"
-./tools/run-phase.sh requirements "$RUN_DIR"
-./tools/run-phase.sh research "$RUN_DIR" [--roots path1,path2]
-./tools/run-phase.sh plan "$RUN_DIR"
-./tools/run-phase.sh implementation "$RUN_DIR"
-./tools/run-phase.sh validation "$RUN_DIR" [--test-cmd "npm test"]
-./tools/run-phase.sh version-control "$RUN_DIR" [--status] [--commit "msg"]
-
-# Scaffold project-local framework files
-./tools/init-project.sh /path/to/your-repo
+./bin/speclite run-phase discovery "$RUN_DIR" --topics "topic1,topic2"
+./bin/speclite run-phase requirements "$RUN_DIR"
+./bin/speclite run-phase research "$RUN_DIR" [--roots path1,path2]
+./bin/speclite run-phase plan "$RUN_DIR"
+./bin/speclite run-phase implementation "$RUN_DIR"
+./bin/speclite run-phase validation "$RUN_DIR" [--test-cmd "npm test"]
+./bin/speclite run-phase version-control "$RUN_DIR" [--status] [--commit "msg"]
 
 # Workflow studio
-./tools/workflow-studio.sh list
-./tools/workflow-studio.sh explain plan
-./tools/workflow-studio.sh new release-readiness
-./tools/workflow-studio.sh doctor
+./bin/speclite workflow list
+./bin/speclite workflow explain plan
+./bin/speclite workflow new release-readiness
+./bin/speclite workflow doctor
 ```
 
 ## Editor commands

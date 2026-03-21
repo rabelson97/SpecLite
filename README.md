@@ -163,7 +163,7 @@ debug -> research -> plan -> implementation -> validation
 
 ### Add a custom project workflow
 ```bash
-./tools/workflow-studio.sh new release-readiness
+./bin/speclite workflow new release-readiness
 ```
 
 ## Works with your tools
@@ -313,5 +313,6 @@ Yes. The run-directory model plus `.speclite/` makes handoffs, review, and repea
 - `integrations/README.md` — editor integration details
 - `integrations/claude/README.md` — Claude Code notes
 - `workflows/README.md` — workflow catalog
+- `tests/test_speclite.sh` — lightweight shell smoke tests
 - `CHANGELOG.md` — notable changes
 - `MIGRATION.md` — upgrade notes
