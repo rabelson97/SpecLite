@@ -1,6 +1,6 @@
 # Workflows
 
-Workflow commands are markdown files designed for AI runners such as Cursor, Codex, and Kiro.
+Workflow commands are markdown files designed for AI runners such as Cursor, Codex, Claude Code, and Kiro.
 
 SpecLite now has two workflow layers:
 
@@ -13,6 +13,7 @@ These improve ergonomics and route requests into the right artifact-producing pa
 - `enhance/workflow.md`
 - `orchestrate/workflow.md`
 - `status/workflow.md`
+- `workflow/workflow.md`
 
 ## 2) Canonical phase workflows
 
@@ -26,28 +27,18 @@ These are the durable SDLC backbone of the framework.
 - `validation/workflow.md`
 - `version-control/workflow.md`
 
-## Usage pattern
+## Project-local workflows
 
-Typical path for new work:
+Projects can also define local workflows in:
 
-```bash
-./tools/new-run.sh "Project Name"
-./tools/run-phase.sh requirements [run_dir]
-./tools/run-phase.sh research [run_dir]
-./tools/run-phase.sh plan [run_dir]
-./tools/run-phase.sh implementation [run_dir]
-./tools/run-phase.sh validation [run_dir]
-./tools/run-phase.sh version-control [run_dir]
+```text
+.speclite/workflows/
 ```
 
-## Recommended routing
-
-- vague idea or solution exploration -> `brainstorm`
-- bug or regression -> `debug`
-- existing system improvement -> `enhance`
-- unclear request -> `orchestrate`
-- re-entry / summary -> `status`
-- known explicit SDLC step -> phase workflow directly
+Recommended resolution order:
+1. project-local `.speclite/workflows/`
+2. user-level `~/.speclite/workflows/`
+3. built-in `workflows/`
 
 ## Principle
 

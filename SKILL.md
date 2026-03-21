@@ -1,15 +1,23 @@
 ---
 name: speclite
-description: SpecLite - Artifact-first AI development workflow for spec-driven software delivery. Use when you want structured discovery, requirements, research, planning, implementation, validation, version control, or higher-level routing via brainstorm, debug, enhance, orchestrate, and status. Supports Codex, Cursor, and Kiro integrations.
+description: SpecLite - Artifact-first AI development workflow and project-local spec framework. Use when you want structured discovery, requirements, research, planning, implementation, validation, version control, workflow creation, project docs, project rules, or higher-level routing via brainstorm, debug, enhance, orchestrate, status, and workflow. Supports Codex, Cursor, Claude Code, and Kiro.
 ---
 
 # SpecLite
 
-SpecLite is an artifact-first AI development workflow that stores phase outputs in `runs/<run_id>/`.
+SpecLite is an artifact-first AI development workflow and project-local framework.
 
 ## Core model
 
-Canonical phases:
+Front-door workflows:
+- brainstorm
+- debug
+- enhance
+- orchestrate
+- status
+- workflow
+
+Backbone phases:
 - discovery
 - requirements
 - research
@@ -18,50 +26,39 @@ Canonical phases:
 - validation
 - version-control
 
-Higher-level workflows:
-- brainstorm
-- debug
-- enhance
-- orchestrate
-- status
+Project-local framework:
+- `.speclite/project.md`
+- `.speclite/workflows/`
+- `.speclite/docs/`
+- `.speclite/rules/`
+- `.speclite/skills/`
+- `.speclite/agents/`
 
-## Key ideas
+## Resolution order
 
-- Preserve traceable run artifacts instead of relying on chat history.
-- Route user intent into the smallest correct workflow path.
-- Apply small specialist overlays where useful.
-- Keep the canonical phase outputs as the durable contract.
+1. project-local `.speclite/...`
+2. user-level `~/.speclite/...`
+3. built-in framework defaults
 
 ## Setup
 
 ```bash
 ./tools/setup.sh
 ./tools/new-run.sh "Project Name"
+cp -R templates/project/.speclite /path/to/your-repo/.speclite
 ```
 
 ## Integration commands
 
 ```bash
-./tools/install-integrations.sh --codex --kiro --cursor
+./tools/install-integrations.sh --codex --kiro --cursor --claude
 ./tools/install-integrations.sh --project
-```
-
-## Canonical phase commands
-
-```bash
-./tools/run-phase.sh discovery [run_dir] [--topics "topic1,topic2"]
-./tools/run-phase.sh requirements [run_dir] [--project "Name"]
-./tools/run-phase.sh research [run_dir] [--roots path1,path2]
-./tools/run-phase.sh plan [run_dir]
-./tools/run-phase.sh implementation [run_dir]
-./tools/run-phase.sh validation [run_dir] [--test-cmd "cmd"]
-./tools/run-phase.sh version-control [run_dir] [--status] [--commit "msg"]
 ```
 
 ## Reference docs
 
 - `README.md`
 - `QUICKREF.md`
-- `EXAMPLES.md`
 - `integrations/README.md`
+- `integrations/claude/README.md`
 - `workflows/README.md`

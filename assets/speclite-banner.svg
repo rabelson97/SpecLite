@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" rx="24" fill="#0B1020"/>
+  <rect x="48" y="48" width="1104" height="534" rx="20" fill="url(#g)" fill-opacity="0.08" stroke="#2A3557"/>
+  <circle cx="120" cy="120" r="6" fill="#60A5FA"/>
+  <circle cx="148" cy="120" r="6" fill="#34D399"/>
+  <circle cx="176" cy="120" r="6" fill="#F59E0B"/>
+  <text x="88" y="220" fill="#F8FAFC" font-size="64" font-family="Inter, Arial, sans-serif" font-weight="700">SpecLite</text>
+  <text x="88" y="275" fill="#CBD5E1" font-size="30" font-family="Inter, Arial, sans-serif">Artifact-first AI workflows for shipping software</text>
+  <text x="88" y="355" fill="#93C5FD" font-size="24" font-family="Inter, Arial, sans-serif">brainstorm → spec → research → plan → implement → validate → ship</text>
+  <rect x="88" y="410" width="180" height="46" rx="23" fill="#1D4ED8"/>
+  <text x="118" y="439" fill="#F8FAFC" font-size="22" font-family="Inter, Arial, sans-serif">Spec-driven</text>
+  <rect x="286" y="410" width="178" height="46" rx="23" fill="#065F46"/>
+  <text x="316" y="439" fill="#F8FAFC" font-size="22" font-family="Inter, Arial, sans-serif">Portable</text>
+  <rect x="482" y="410" width="208" height="46" rx="23" fill="#7C3AED"/>
+  <text x="512" y="439" fill="#F8FAFC" font-size="22" font-family="Inter, Arial, sans-serif">Project-aware</text>
+  <text x="760" y="210" fill="#E2E8F0" font-size="22" font-family="Inter, Arial, sans-serif">.speclite/</text>
+  <text x="760" y="248" fill="#CBD5E1" font-size="18" font-family="JetBrains Mono, monospace">project.md</text>
+  <text x="760" y="280" fill="#CBD5E1" font-size="18" font-family="JetBrains Mono, monospace">workflows/</text>
+  <text x="760" y="312" fill="#CBD5E1" font-size="18" font-family="JetBrains Mono, monospace">docs/</text>
+  <text x="760" y="344" fill="#CBD5E1" font-size="18" font-family="JetBrains Mono, monospace">rules/</text>
+  <text x="760" y="376" fill="#CBD5E1" font-size="18" font-family="JetBrains Mono, monospace">skills/</text>
+  <text x="760" y="408" fill="#CBD5E1" font-size="18" font-family="JetBrains Mono, monospace">agents/</text>
+  <defs>
+    <linearGradient id="g" x1="48" y1="48" x2="1152" y2="582" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60A5FA"/>
+      <stop offset="0.5" stop-color="#34D399"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+</svg>
