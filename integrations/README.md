@@ -73,22 +73,23 @@ Cursor commands are symlinked directly to workflow markdown files.
 Available commands:
 
 - `/brainstorm`
-- `/debug`
-- `/0-discovery`
-- `/enhance`
 - `/orchestrate`
-- `/1-requirements`
-- `/2-research`
-- `/3-plan`
-- `/4-implement`
+- `/enhance`
+- `/debug`
 - `/status`
-- `/5-validate`
+- `/discovery`
+- `/requirements`
+- `/research`
+- `/plan`
+- `/implement`
+- `/validate`
 - `/version-control`
 
 ## Recommended mental model
 
 - use **`orchestrate`** when the user just describes intent
-- use **phase commands** when you already know the exact workflow step
+- use **front-door workflows** for exploration, debugging, and improvement work
+- use **phase commands** when you already know the exact SDLC step
 - use **status** when returning to a run after a break
 
 This gives SpecLite a smoother front door while preserving the original artifact contract.
