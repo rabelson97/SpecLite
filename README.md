@@ -162,8 +162,8 @@ debug -> research -> plan -> implementation -> validation
 ```
 
 ### Add a custom project workflow
-```text
-workflow new release-readiness
+```bash
+./tools/workflow-studio.sh new release-readiness
 ```
 
 ## Works with your tools
