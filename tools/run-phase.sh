@@ -77,6 +77,63 @@ ensure_parent_dir() {
 
 # Returns 0 when context should be used, 1 when skipped.
 # mode: auto|yes|no
+
+project_root() {
+  speclite_project_root
+}
+
+project_manifest() {
+  printf "%s/.speclite/project.md\n" "$(project_root)"
+}
+
+project_rules_dir() {
+  printf "%s/.speclite/rules\n" "$(project_root)"
+}
+
+project_docs_dir() {
+  printf "%s/.speclite/docs\n" "$(project_root)"
+}
+
+seed_project_summary() {
+  local manifest
+  manifest="$(project_manifest)"
+  if [[ -f "$manifest" ]]; then
+    awk 'NF {print "- "$0}' "$manifest" | sed -n '1,12p'
+  else
+    printf '%s\n' '- No .speclite/project.md found yet.'
+  fi
+}
+
+seed_rules_summary() {
+  local rules_dir
+  rules_dir="$(project_rules_dir)"
+  if [[ -d "$rules_dir" ]]; then
+    find "$rules_dir" -maxdepth 1 -type f -name '*.md' ! -name 'README.md' | xargs -r -n1 basename | sed 's/\.md$//' | sort | sed 's/^/- /'
+  else
+    printf '%s\n' '- No project rules directory found yet.'
+  fi
+}
+
+seed_docs_summary() {
+  local docs_dir
+  docs_dir="$(project_docs_dir)"
+  if [[ -d "$docs_dir" ]]; then
+    find "$docs_dir" -maxdepth 1 -type f -name '*.md' ! -name 'README.md' | xargs -r -n1 basename | sed 's/\.md$//' | sort | sed 's/^/- /'
+  else
+    printf '%s\n' '- No project docs directory found yet.'
+  fi
+}
+
+seed_repo_summary() {
+  local root
+  root="$(project_root)"
+  printf '%s\n' "- project_root: $root"
+  if [[ -d "$root/.git" ]]; then
+    (cd "$root" && git status --short --branch | sed 's/^/- /') || true
+  fi
+  find "$root" -maxdepth 2 -type f | sed "s|$root/||" | sort | sed -n '1,12p' | sed 's/^/- sample_file: /'
+}
+
 should_use_context() {
   local label="$1"
   local path="$2"
@@ -188,13 +245,16 @@ case "$phase" in
       [[ -f "$input_file" ]] || fail "input file not found: $input_file"
       cat "$input_file" >> "$out"
     elif [[ "$include_discovery" == "true" ]]; then
-      printf "(seed from discovery findings as needed)\n" >> "$out"
+      printf "Use discovery findings to frame the problem, constraints, and likely approach.\n" >> "$out"
     else
-      printf "(add problem statement here)\n" >> "$out"
+      printf "This run should define the concrete problem, target users, constraints, and the change we are trying to make.\n\nProject snapshot:\n" >> "$out"
+      seed_project_summary >> "$out"
     fi
 
+    append_section "$out" "Project Rules to Respect"
+    seed_rules_summary >> "$out"
     append_section "$out" "Clarifications"
-    printf "(add clarifying questions and answers here)\n" >> "$out"
+    printf -- "- What outcome matters most?\n- What is explicitly out of scope?\n- What should not be broken while making this change?\n" >> "$out"
     echo "$out"
     ;;
 
@@ -243,8 +303,10 @@ case "$phase" in
     printf '%s\n' "- file_list: ${idx_dir}/files.txt" >> "$out"
     printf '%s\n' "- extension_counts: ${idx_dir}/extensions.txt" >> "$out"
     printf '%s\n' "- largest_files: ${idx_dir}/largest_files.txt" >> "$out"
+    append_section "$out" "Project Docs Reviewed"
+    seed_docs_summary >> "$out"
     append_section "$out" "Notes"
-    printf "(add research notes here)\n" >> "$out"
+    printf -- "- Summarize relevant files, conventions, and risk areas here.\n- Note any hotspots, dependencies, or missing context.\n" >> "$out"
     echo "$out"
     ;;
 
@@ -295,20 +357,22 @@ case "$phase" in
     fi
 
     append_section "$out" "Goal"
-    printf "(add goal statement)\n" >> "$out"
+    printf "Translate the requirements and research into a concrete delivery goal for this project.\n" >> "$out"
     append_section "$out" "Success Criteria"
-    printf "(add success criteria)\n" >> "$out"
+    printf -- "- The change solves the stated problem.\n- The affected code paths are validated.\n- Project rules and constraints remain satisfied.\n" >> "$out"
     append_section "$out" "Top Gaps/Risks"
-    printf "(add ranked gaps/risks)\n" >> "$out"
+    printf -- "- Missing product context or acceptance criteria\n- Hidden coupling in the target area\n- Validation gaps or regression risk\n" >> "$out"
     append_section "$out" "Plan"
     if [[ -n "$input_file" ]]; then
       [[ -f "$input_file" ]] || fail "input file not found: $input_file"
       cat "$input_file" >> "$out"
     else
-      printf "(add plan overview)\n" >> "$out"
+      printf "Use this section to explain the smallest safe path from the current state to the desired outcome.\n" >> "$out"
     fi
     append_section "$out" "Phases"
-    printf '%s\n' "- 1. (phase goal) — Scope: (files/areas). Outcome: (expected result)" >> "$out"
+    printf '%s\n' "- 1. Prepare context — Scope: requirements, research, project docs/rules. Outcome: clear change boundary." >> "$out"
+    printf '%s\n' "- 2. Make the change — Scope: target files only. Outcome: implementation aligned with constraints." >> "$out"
+    printf '%s\n' "- 3. Validate and summarize — Scope: tests and verification. Outcome: confidence to ship." >> "$out"
     echo "$out"
     ;;
 
